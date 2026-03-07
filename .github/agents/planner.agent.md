@@ -3,10 +3,10 @@ name: Planner
 description: Research and planning specialist. Reads requirements from SESSION.md, produces the complete IMPLEMENTATION_PLAN.md and SHARED_CONTRACTS.md. Uses Context7 for all library documentation. Does not write feature code.
 tools: ['search', 'fetch', 'editFiles', 'codebase', 'usages', 'context7/*']
 agents: []
-model: claude-sonnet-4-5
+model: Claude Sonnet 4.6 (copilot)
 handoffs:
   - label: "→ Contracts Pass Ready"
-    agent: team-lead
+    agent: TeamLead
     prompt: "Planning complete. IMPLEMENTATION_PLAN.md and SHARED_CONTRACTS.md are written. Please review the plan and transition to Phase 2."
     send: false
 ---

@@ -2,11 +2,11 @@
 name: TeamLead
 description: Orchestration agent. Start here. Conducts the requirements interview, manages workflow state in SESSION.md, routes tasks to specialist subagents, and drives the pipeline from requirements through to completion.
 tools: ['search', 'fetch', 'editFiles', 'codebase', 'usages', 'problems', 'agent']
-agents: ['planner', 'implementor', 'reviewer']
-model: claude-sonnet-4-5
+agents: ['Planner', 'Implementor', 'Reviewer']
+model: Claude Sonnet 4.6 (copilot)
 handoffs:
   - label: "→ Start Planning"
-    agent: planner
+    agent: Planner
     prompt: "Requirements are locked in SESSION.md. Read SESSION.md requirements section, then produce the full IMPLEMENTATION_PLAN.md. Use Context7 for all library research. Do not begin until you have read SESSION.md."
     send: false
 ---

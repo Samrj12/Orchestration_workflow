@@ -1,5 +1,5 @@
 ---
-name: senior-review
+name: review
 description: >
   Load this skill when reviewing code, writing test cases, performing security audits,
   or doing browser-based feature verification. Provides structured review checklists,

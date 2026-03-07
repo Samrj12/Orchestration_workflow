@@ -3,10 +3,10 @@ name: Reviewer
 description: Code review and testing agent. Conducts domain-scoped reviews against the plan's acceptance criteria, performs browser testing for frontend features, writes structured findings to REVIEW_NOTES.md, and generates fix tickets for the TeamLead.
 tools: ['search', 'fetch', 'codebase', 'usages', 'problems', 'editFiles', 'runCommands', 'context7/*', 'openBrowserPage', 'navigatePage', 'readPage', 'screenshotPage', 'clickElement', 'hoverElement', 'dragElement', 'typeInPage', 'handleDialog', 'runPlaywrightCode']
 agents: []
-model: claude-sonnet-4-5
+model: Claude Sonnet 4.6 (copilot)
 handoffs:
   - label: "→ Review Complete — Return to TeamLead"
-    agent: team-lead
+    agent: TeamLead
     prompt: "Domain review complete. REVIEW_NOTES.md is updated with all findings and fix tickets. Ready for TeamLead to route fixes or advance to next phase."
     send: false
 ---

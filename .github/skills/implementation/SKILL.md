@@ -1,5 +1,5 @@
 ---
-name: senior-implementation
+name: implementation
 description: >
   Load this skill when implementing features, writing business logic, building APIs,
   creating data access layers, or writing any production code. Provides senior engineer
