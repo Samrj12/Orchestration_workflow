@@ -44,6 +44,10 @@ Each agent reads ONLY the slice of information its current task requires:
 
 6. **Security is not optional.** Every agent enforces: no secrets in code, no unvalidated inputs at boundaries, parameterized queries only, authentication checks on every protected route. These are not review items — they are implementation requirements.
 
+7. **Domain sizing is the Planner's most important architectural decision.** A standard full-stack project has exactly 2 domains: BACKEND and FRONTEND. Adding a third domain requires a genuine runtime boundary (a separate service, worker, or CLI) — not feature complexity. Over-decomposed plans (5+ micro-domains for a simple CRUD app) are rejected at Phase 1 validation and sent back to the Planner.
+
+8. **TeamLead never edits source code.** If the TeamLead identifies a defect in source files during any verification step, it writes a fix ticket and routes it to the Implementor. Editing source files is outside the TeamLead's role and degrades its coordination capability.
+
 ---
 
 ## Workflow Phases
@@ -51,12 +55,12 @@ Each agent reads ONLY the slice of information its current task requires:
 ```
 PHASE 0: Requirements Interview  → TeamLead
 PHASE 1: Planning & Research     → Planner
-PHASE 2: Contracts               → Implementor (contracts-only pass)
-PHASE 3: Parallel Implementation → Implementors (per domain, parallel)
-PHASE 4: Review                  → Reviewer (per domain, sequential)
-PHASE 5: Fix Cycle               → Implementors (targeted fixes only)
-PHASE 6: Integration Review      → Reviewer (cross-domain pass)
-PHASE 7: Complete                → TeamLead confirms with user
+PHASE 2: Contracts               → Implementor (sequential)
+PHASE 3: Implementation          → Implementors (parallel — BACKEND + FRONTEND)
+PHASE 4: Review                  → Reviewers (parallel — BACKEND + FRONTEND simultaneously,
+                                   each includes cross-domain contract findings at end of pass)
+PHASE 5: Fix Cycle               → Implementors (targeted fixes, max 2 cycles)
+PHASE 6: Complete                → TeamLead confirms with user
 ```
 
 The TeamLead updates `SESSION.md → Current Phase` at every phase transition.
