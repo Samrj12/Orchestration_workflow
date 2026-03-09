@@ -63,4 +63,11 @@ PHASE 5: Fix Cycle               → Implementors (targeted fixes, max 2 cycles)
 PHASE 6: Complete                → TeamLead confirms with user
 ```
 
+PHASE 3: Implementation → Implementors (parallel — invoke via runSubagent simultaneously)
+Note: BACKEND and FRONTEND can run in parallel because SHARED_CONTRACTS.md is locked
+before Phase 3 begins. Frontend codes against the contract, not against a running backend.
+
+9. **npm install (and equivalent) runs once, in the Contracts pass, for all workspaces.** 
+    Domain implementors never run package installs. If a domain implementor finds a 
+    missing dependency, it writes a blocker to PROGRESS.md.
 The TeamLead updates `SESSION.md → Current Phase` at every phase transition.

@@ -118,12 +118,14 @@ DO NOT: write any feature code. Only types, schemas, and DB migrations.
 ```
 
 After contracts pass:
-- Verify all three CONTRACTS tasks are complete
-- Update `SESSION.md → Current Phase` to `PHASE 3: Parallel Implementation`
-- Update SESSION.md Active Tasks table with all Phase 3 domains
-
-### PHASE 3 → Parallel Implementors
-
+ After writing all contract files, run npm install (or equivalent) for every workspace 
+ in the project. This is the only install step in the entire workflow. Example:
+    cd backend && npm install
+    cd ../frontend && npm install
+ Domain implementors in Phase 3 must not run installs.
+ Verify all three CONTRACTS tasks are complete
+ Update `SESSION.md → Current Phase` to `PHASE 3: Parallel Implementation`
+ Update SESSION.md Active Tasks table with all Phase 3 domains
 Read the Parallelization Map from `docs/plan/IMPLEMENTATION_PLAN.md`.
 
 **Parallelism cap: invoke at most 3 domain implementors simultaneously.** If the plan has more than 3 domains (it should not — see domain validation in Phase 1), batch them into waves of 3 max.
@@ -140,8 +142,9 @@ READ: src/[domain]/PROGRESS.md (if exists — your memory from previous pass)
 DO NOT READ: other domains' files, other domains' tasks, full plan
 ```
 
-**Important:** BACKEND must complete (or at minimum complete the Contracts pass) before FRONTEND begins, since the frontend depends on the API contracts being finalized. This is a sequential dependency, not a parallel one.
-
+Invoke BACKEND and FRONTEND implementors in parallel using runSubagent. Both domains 
+code against SHARED_CONTRACTS.md which is already locked — FRONTEND does not need a 
+running backend, it needs defined contracts.
 Track each domain's status in `SESSION.md → Active Tasks`.
 
 ### PHASE 4 → Parallel Reviews
@@ -198,7 +201,13 @@ You MUST enforce these. Never violate them:
 1. **Never pass full chat history to a subagent.** Always construct a specific, minimal context block.
 2. **Never let a subagent start if `SESSION.md` phase doesn't match.** Verify phase first.
 3. **If a subagent produces output that wasn't asked for** (e.g., planner writes code, implementor creates a full review), discard the extra output and do not feed it forward.
-4. **Read SESSION.md before every action.** Your own memory is unreliable. The file is truth.
-5. **Never make an assumption about what the user wants.** Surface it and ask.
-6. **Never edit source code files.** You are a coordinator, not an implementor. `SESSION.md` is the only file you ever write to. If you discover any defect in source code during verification — a broken route mount, wrong export type, missing middleware — write a targeted fix ticket to `SESSION.md → Fix Tickets` and invoke the Implementor with that ticket. This rule has no exceptions. The moment you start editing `index.ts` to fix a route, you have crossed into implementation territory, your context degrades, and you become unreliable as an orchestrator.
-7. **Validate domain sizing before Phase 3.** If the plan has more than 4 domains or any domain with fewer than 8 tasks, bounce it back to the Planner for consolidation. Do not let an over-decomposed plan proceed to implementation.
+4. **"Verify" means read PROGRESS.md, nothing else.** When a phase transition says 
+"verify tasks are complete", you open PROGRESS.md and check that each task ID is 
+marked with [x]. You do not run terminal commands, PowerShell scripts, or server 
+checks to verify. You do not read source files to validate correctness — that is the 
+Reviewer's job. If PROGRESS.md says it's done, it's done. Route to Reviewer if you 
+have doubts.
+5. **Read SESSION.md before every action.** Your own memory is unreliable. The file is truth.
+6. **Never make an assumption about what the user wants.** Surface it and ask.
+7. **Never edit source code files.** You are a coordinator, not an implementor. `SESSION.md` is the only file you ever write to. If you discover any defect in source code during verification — a broken route mount, wrong export type, missing middleware — write a targeted fix ticket to `SESSION.md → Fix Tickets` and invoke the Implementor with that ticket. This rule has no exceptions. The moment you start editing `index.ts` to fix a route, you have crossed into implementation territory, your context degrades, and you become unreliable as an orchestrator.
+8. **Validate domain sizing before Phase 3.** If the plan has more than 4 domains or any domain with fewer than 8 tasks, bounce it back to the Planner for consolidation. Do not let an over-decomposed plan proceed to implementation.

@@ -82,6 +82,12 @@ Key things to resolve before moving on:
 
 **Target: 2–4 domains total for most projects. Never more than 6.**
 
+Parallel execution note: domains are safe to run in parallel BECAUSE shared contracts 
+are locked first. When writing domain task lists, never create a task in FRONTEND that 
+depends on BACKEND implementation being complete — only on contracts being defined. 
+If you find yourself writing "FRONTEND-XX depends on BACKEND-XX completing", that is a 
+contracts gap — add the missing definition to SHARED_CONTRACTS.md instead.
+
 **Minimum domain size:** A domain must justify its own subagent. It should represent at least:
 - ~800–1,200 lines of production code, OR
 - 8+ tasks, OR
