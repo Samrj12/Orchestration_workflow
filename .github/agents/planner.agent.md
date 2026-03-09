@@ -3,7 +3,7 @@ name: Planner
 description: Research and planning specialist. Reads requirements from SESSION.md, produces the complete IMPLEMENTATION_PLAN.md and SHARED_CONTRACTS.md. Uses Context7 for all library documentation. Does not write feature code.
 tools: [read/readFile, edit/editFiles, search, web/fetch, 'io.github.upstash/context7/*']
 agents: []
-model: Claude Sonnet 4.6 (copilot)
+model: Claude Opus 4.6 (copilot)
 ---
 
 # Planner — Research & Architecture Agent

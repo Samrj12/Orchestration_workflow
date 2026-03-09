@@ -17,8 +17,10 @@ This workflow uses a persistent file-based memory system. No agent should ever r
 | `docs/plan/SHARED_CONTRACTS.md` | Planner (Phase 0) | All shared types, API schemas, DB models — written first, locked |
 | `docs/review/REVIEW_NOTES.md` | Reviewer | Structured domain-by-domain review findings |
 | `src/<domain>/PROGRESS.md` | Implementor | Per-domain progress log, written after each pass |
+| `docs/SPEC.md` | /spec prompt | Full project specification — read by TeamLead at Phase 0 startup. Written before TeamLead is invoked. |
 
 ### Context Discipline — The Golden Rule
+
 
 **No agent ever loads the full codebase or full plan into context.**
 Each agent reads ONLY the slice of information its current task requires:
@@ -27,6 +29,8 @@ Each agent reads ONLY the slice of information its current task requires:
 - Planner → reads `SESSION.md` + fetches Context7 docs for specific libraries
 - Implementor → reads its assigned task block from `IMPLEMENTATION_PLAN.md` + `SHARED_CONTRACTS.md` + its own `PROGRESS.md` + only the specific files for its domain
 - Reviewer → reads the plan's acceptance criteria for one domain + only that domain's changed files + `REVIEW_NOTES.md` to append findings
+- TeamLead (Phase 0) → reads `docs/SPEC.md` fully on startup, then proceeds directly to planning.
+    If SPEC.md is absent, TeamLead asks the user to run `/spec` first before continuing.
 
 ---
 
@@ -52,8 +56,11 @@ Each agent reads ONLY the slice of information its current task requires:
 
 ## Workflow Phases
 
+
 ```
-PHASE 0: Requirements Interview  → TeamLead
+PHASE 0: Spec Intake             → TeamLead reads docs/SPEC.md (written by /spec prompt before this chat).
+                                   If docs/SPEC.md is missing or incomplete, TeamLead runs a short
+                                   clarification pass — it does NOT run a full interview from scratch.
 PHASE 1: Planning & Research     → Planner
 PHASE 2: Contracts               → Implementor (sequential)
 PHASE 3: Implementation          → Implementors (parallel — BACKEND + FRONTEND)
